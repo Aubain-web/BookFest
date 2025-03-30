@@ -1,5 +1,6 @@
 package com.example.user_service.Config;
 
+import com.example.user_service.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import com.example.user_service.service.CustomUserDetailsService;
 import java.io.IOException;
 
 @Component
-public class JwtConfig extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;

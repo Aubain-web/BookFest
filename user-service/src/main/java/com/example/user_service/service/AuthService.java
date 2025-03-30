@@ -1,6 +1,6 @@
 package com.example.user_service.service;
 
-import com.example.user_service.config.JwtUtil;
+import com.example.user_service.util.JwtUtil;
 import com.example.user_service.dto.AuthenticationRequest;
 import com.example.user_service.dto.AuthenticationResponse;
 import org.springframework.security.authentication.AuthenticationManager;
