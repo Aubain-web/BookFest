@@ -30,20 +30,17 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Lister tous les utilisateurs
     @GetMapping
     public ResponseEntity<List<UserEntity>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // Créer un utilisateur
     @PostMapping()
     public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity user) {
         UserEntity savedUser = userService.save(user);
         return ResponseEntity.ok(savedUser);
     }
 
-    // Mettre à jour un utilisateur
     @PutMapping("/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserEntity updatedUser) {
         try {
@@ -54,7 +51,6 @@ public class UserController {
         }
     }
 
-    // Supprimer un utilisateur
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserById(@Valid @PathVariable Long id) {
         if (!userService.existsById(id)) {

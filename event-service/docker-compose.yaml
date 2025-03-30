@@ -1,6 +1,4 @@
 
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -15,19 +13,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  user-service:
-    build: .
-    container_name: event-service
-    restart: always
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event_service
-      SPRING_DATASOURCE_USERNAME: event
-      SPRING_DATASOURCE_PASSWORD: eventpsw
-    ports:
-      - "8080:8080"
-
 volumes:
   postgres_data:
-    driver: local

@@ -1,6 +1,9 @@
 package com.example.user_service.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,19 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.example.user_service.entity.Role;
-
 @Getter
 @Setter
-@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -36,5 +32,5 @@ public class UserEntity {
     @NotBlank(message = "Le mot de passe est obligatoire")
     private String password;
 
-    private String role = String.valueOf(Role.User);
+    private String role = Role.USER.name();
 }
