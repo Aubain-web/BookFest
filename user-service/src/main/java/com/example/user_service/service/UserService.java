@@ -48,7 +48,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity save(UserEntity user) {
-        // Encode password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -61,7 +60,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).map(user -> {
             user.setUsername(updatedUser.getUsername());
             user.setEmail(updatedUser.getEmail());
-            // Only encode password if it's been changed
             if (!user.getPassword().equals(updatedUser.getPassword())) {
                 user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }

@@ -30,14 +30,16 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserEntity>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping()
-    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity user) {
+    @PostMapping("/register")
+    public ResponseEntity<UserEntity> createUser( @RequestBody UserEntity user) {
         UserEntity savedUser = userService.save(user);
+        System.out.println("User created: " + savedUser);
+        System.out.println("User ID: " + savedUser.getId());
         return ResponseEntity.ok(savedUser);
     }
 
