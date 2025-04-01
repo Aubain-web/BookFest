@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaRepositories(basePackages = "org.example.eventservice")
+@EnableJpaRepositories(basePackages = "org.example.eventservice.repository")
 @EntityScan(basePackages = "org.example.eventservice.entity")
 @SpringBootApplication
 public class EventServiceApplication {
