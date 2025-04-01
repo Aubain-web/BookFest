@@ -37,7 +37,7 @@ public class EventController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/allevents")
     public ResponseEntity<List<EventEntity>> getAllEvents() {
         List<EventEntity> events = eventService.findAll();
         return ResponseEntity.ok(events);
