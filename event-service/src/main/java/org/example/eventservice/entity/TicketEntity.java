@@ -1,10 +1,17 @@
 package org.example.eventservice.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.example.eventservice.entity.TicketSatus.TicketStatus;
 
 import java.time.LocalDateTime;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class TicketEntity {
     @Id
@@ -28,7 +35,7 @@ public class TicketEntity {
     private LocalDateTime purchaseDate = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
-    private TicketStatus status;
+    private TicketStatus status = TicketStatus.Await;
 
 }
 

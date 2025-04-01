@@ -9,9 +9,21 @@ services:
       POSTGRES_USER: event
       POSTGRES_PASSWORD: eventpsw
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"  # Port pour la communication entre services
+      - "15672:15672" # Port du dashboard rabbitmq
+
 
 
 volumes:

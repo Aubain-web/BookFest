@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -49,4 +50,5 @@ public class EventEntity {
     private Integer capacity;
 
     private String imageUrl;
+
 }

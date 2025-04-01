@@ -4,4 +4,5 @@ public enum TicketStatus {
     Paid,
     Pending,
     Canceled,
+    Await
 }
