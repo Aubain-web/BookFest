@@ -1,17 +1,18 @@
-package com.example.user_service;
+package org.example.eventservice;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class TestDBConnection {
+public class TestDBConnectionEvent {
 
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/user_service";
-        String user = "user";
-        String password = "password";
+        String url = "jdbc:postgresql://localhost:5432/event_service";
+        String user = "event";
+        String password = "eventpsw";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println(" Connexion réussie !");
+            System.out.println("✅ Connexion réussie !");
         } catch (Exception e) {
             e.printStackTrace();
         }

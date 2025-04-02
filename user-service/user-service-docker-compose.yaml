@@ -31,10 +31,12 @@ services:
       POSTGRES_DB: user_service
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    networks:
+      - bookfest-user-network
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_user:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -48,5 +50,9 @@ services:
       - "15673:15672" # Port pour accéder au dashboard de RabbitMQ
 
 volumes:
-  postgres_data:
-    driver: local
+  postgres_data_user:
+
+
+networks:
+  bookfest-user-network:
+    external: true
