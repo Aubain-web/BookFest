@@ -1,6 +1,5 @@
 package org.example.eventservice.service;
 
-import org.example.eventservice.config.RabbitmqConfig;
 import org.example.eventservice.dto.TicketDTO;
 import org.example.eventservice.entity.EventEntity;
 import org.example.eventservice.entity.TicketEntity;
@@ -30,31 +29,6 @@ public class TicketService {
     public TicketEntity createTicket(TicketEntity ticket) {
         ticket.setStatus(TicketStatus.Paid);
         return ticketRepository.save(ticket);
-    }
-
-    @RabbitListener(queues = RabbitmqConfig.QUEUE_NAME)
-    public void receiveTicketMessage(TicketDTO ticketDTO) {
-        System.out.println(" Ticket message received: " + ticketDTO);
-
-        try {
-            EventEntity event = eventRepository.findById(ticketDTO.getEventId())
-                    .orElseThrow(() -> new RuntimeException("Event not found"));
-
-            TicketEntity ticket = TicketEntity.builder()
-                    .event(event)
-                    .buyerEmail(ticketDTO.getBuyerEmail())
-                    .price(ticketDTO.getPrice())
-                    .quantity(ticketDTO.getQuantity())
-                    .purchaseDate(LocalDateTime.now())
-                    .status(TicketStatus.Paid)
-                    .build();
-
-            ticketRepository.save(ticket);
-            System.out.println("Ticket created successfully for event: " + event.getName());
-
-        } catch (Exception e) {
-            System.err.println("Error processing ticket: " + e.getMessage());
-        }
     }
 
     public TicketEntity getTicketById(Long id) {

@@ -1,11 +1,9 @@
 package org.example.eventservice.controller;
 
 import org.example.eventservice.dto.TicketDTO;
-import org.example.eventservice.dto.TicketPurchaseRequest;
 import org.example.eventservice.entity.TicketEntity;
 import org.example.eventservice.service.JwtService;
 import org.example.eventservice.service.TicketService;
-import org.example.eventservice.service.TicketPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -24,14 +22,12 @@ import java.util.List;
 public class TicketController {
 
     private final TicketService ticketService;
-    private final TicketPublisher ticketPublisher;
     private final RestTemplate restTemplate;
     private final JwtService jwtService;
 
     @Autowired
-    public TicketController(TicketService ticketService, TicketPublisher ticketPublisher, RestTemplate restTemplate, JwtService jwtService) {
+    public TicketController(TicketService ticketService, RestTemplate restTemplate, JwtService jwtService) {
         this.ticketService = ticketService;
-        this.ticketPublisher = ticketPublisher;
         this.restTemplate = restTemplate;
         this.jwtService = jwtService;
     }

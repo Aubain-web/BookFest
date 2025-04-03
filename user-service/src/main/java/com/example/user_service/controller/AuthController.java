@@ -4,7 +4,6 @@ import com.example.user_service.dto.AuthenticationRequest;
 import com.example.user_service.dto.AuthenticationResponse;
 import com.example.user_service.dto.TicketDTO;
 import com.example.user_service.service.AuthService;
-import com.example.user_service.service.TicketPublisher;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -37,7 +36,7 @@ public class AuthController {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token); // 🔥 Passer le JWT
+        headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<TicketDTO> entity = new HttpEntity<>(request, headers);
