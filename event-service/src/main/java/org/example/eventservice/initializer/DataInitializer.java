@@ -53,7 +53,7 @@ public class DataInitializer implements CommandLineRunner {
                             .category("Food & Drink")
                             .price(65.5)
                             .capacity(150)
-                            .imageUrl("https://example.com/wine-tasting.jpg")
+                            .imageUrl("https://sanfranciscowineschool.com/cdn/shop/articles/rsz_shutterstock_691397962_1.jpg?v=1597827585&width=1500")
                             .build(),
                     EventEntity.builder()
                             .name("Marathon")

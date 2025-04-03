@@ -3,11 +3,14 @@ package org.example.eventservice.controller;
 import org.example.eventservice.dto.TicketDTO;
 import org.example.eventservice.dto.TicketPurchaseRequest;
 import org.example.eventservice.entity.TicketEntity;
+import org.example.eventservice.service.JwtService;
 import org.example.eventservice.service.TicketService;
 import org.example.eventservice.service.TicketPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -23,33 +26,38 @@ public class TicketController {
     private final TicketService ticketService;
     private final TicketPublisher ticketPublisher;
     private final RestTemplate restTemplate;
+    private final JwtService jwtService;
 
     @Autowired
-    public TicketController(TicketService ticketService, TicketPublisher ticketPublisher, RestTemplate restTemplate) {
+    public TicketController(TicketService ticketService, TicketPublisher ticketPublisher, RestTemplate restTemplate, JwtService jwtService) {
         this.ticketService = ticketService;
         this.ticketPublisher = ticketPublisher;
         this.restTemplate = restTemplate;
+        this.jwtService = jwtService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{eventId}")
     public ResponseEntity<List<TicketEntity>> getTicketsByEventId(@PathVariable Long eventId) {
         List<TicketEntity> tickets = ticketService.getTicketsByEventId(eventId);
         return ResponseEntity.ok(tickets);
     }
 
-    @PostMapping("/purchase-ticket")
-    public ResponseEntity<String> purchaseTicket(@RequestBody TicketPurchaseRequest request) {
-        TicketDTO ticketDTO = TicketDTO.builder()
-                .eventId(request.getEventId())
-                .buyerEmail(request.getBuyerEmail())
-                .price(request.getPrice())
-                .quantity(request.getQuantity())
-                .status("Pending")
-                .build();
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/buy-ticket")
+    public ResponseEntity<TicketDTO> buyTicket(
+            @RequestBody TicketDTO request,
+            @RequestHeader("Authorization") String token // 🔥 Vérifier le JWT
+    ) {
+        if (!jwtService.validateToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        ticketPublisher.sendTicketMessage(ticketDTO);
+        TicketDTO purchasedTicket = ticketService.purchaseTicket(
+                request.getId(), request.getEventId(), request.getTicketType()
+        );
 
-        return ResponseEntity.ok("Ticket purchase initiated. You will receive a confirmation shortly.");
+        return ResponseEntity.ok(purchasedTicket);
     }
 
     @GetMapping("/my-tickets")
@@ -72,6 +80,7 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/cancel/{id}")
     public ResponseEntity<Void> cancelTicket(@PathVariable Long id) {
         ticketService.cancelTicket(id);

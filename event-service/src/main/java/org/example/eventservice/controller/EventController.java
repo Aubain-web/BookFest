@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Validated
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/events")
 public class EventController {
